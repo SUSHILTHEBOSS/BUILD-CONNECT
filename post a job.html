@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job - BuildConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Job Form Container */
+        .job-form-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+        
+        .form-header {
+            background: var(--light);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .form-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+        
+        .form-body {
+            padding: 2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .form-section h3 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group label .required {
+            color: var(--danger);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-hint {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.3rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .template-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .template-card {
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .template-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .template-card.active {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .template-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .template-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: var(--light);
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        /* Contractor Matching */
+        .matching-section {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .matching-section h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .matching-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card p {
+            color: var(--gray);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-buttons {
+                display: none;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-hands-helping"></i>
+                <span>BuildConnect</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Find Contractors</a></li>
+                    <li><a href="#" class="active">Post a Job</a></li>
+                    <li><a href="#">Messages</a></li>
+                    <li><a href="#">My Jobs</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <button class="btn btn-outline">Log In</button>
+                <button class="btn btn-primary">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Post a New Job</h1>
+        <p>Fill out the job details and requirements to find the perfect contractor for your project. Our matching algorithm will connect you with qualified professionals.</p>
+    </section>
+
+    <!-- Job Form Container -->
+    <div class="job-form-container">
+        <div class="form-card">
+            <div class="form-header">
+                <h2><i class="fas fa-file-alt"></i> Job Details</h2>
+            </div>
+            
+            <div class="form-body">
+                <div class="form-section">
+                    <h3><i class="fas fa-lightbulb"></i> Job Template</h3>
+                    <p>Select a template to get started quickly:</p>
+                    <div class="template-cards">
+                        <div class="template-card" data-template="home-renovation">
+                            <h4>Home Renovation</h4>
+                            <p>Kitchen, bathroom, or whole house remodeling projects</p>
+                        </div>
+                        <div class="template-card" data-template="electrical">
+                            <h4>Electrical Work</h4>
+                            <p>Wiring, installations, panel upgrades, and repairs</p>
+                        </div>
+                        <div class="template-card" data-template="plumbing">
+                            <h4>Plumbing</h4>
+                            <p>Pipe repairs, fixture installations, drain cleaning</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Job Title <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="job-title" placeholder="e.g., Kitchen Remodeling" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Job Category <span class="required">*</span></label>
+                            <select class="form-control" id="job-category" required>
+                                <option value="">Select a category</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="electrical">Electrical</option>
+                                <option value="carpentry">Carpentry</option>
+                                <option value="painting">Painting</option>
+                                <option value="renovation">Home Renovation</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="hvac">HVAC</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Job Description <span class="required">*</span></label>
+                        <textarea class="form-control" id="job-description" placeholder="Describe the job in detail..." required></textarea>
+                        <div class="form-hint">Be specific about the work required, materials to be used, and any special considerations.</div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Requirements <span class="required">*</span></label>
+                            <textarea class="form-control" id="job-requirements" placeholder="List any specific requirements..." required></textarea>
+                            <div class="form-hint">Licenses, certifications, or special skills needed</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Additional Notes</label>
+                            <textarea class="form-control" id="job-notes" placeholder="Any other relevant information..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3><i class="fas fa-calendar-alt"></i> Timeline & Budget</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Project Start Date <span class="required">*</span></label>
+                            <input type="date" class="form-control" id="start-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Expected Duration</label>
+                            <select class="form-control" id="job-duration">
+                                <option value="">Select duration</option>
+                                <option value="1-3">1-3 days</option>
+                                <option value="4-7">4-7 days</option>
+                                <option value="1-2">1-2 weeks</option>
+                                <option value="3-4">3-4 weeks</option>
+                                <option value="1-3">1-3 months</option>
+                                <option value="3+">3+ months</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Budget Type <span class="required">*</span></label>
+                            <select class="form-control" id="budget-type" required>
+                                <option value="">Select budget type</option>
+                                <option value="fixed">Fixed Price</option>
+                                <option value="hourly">Hourly Rate</option>
+                                <option value="negotiable">Negotiable</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Budget Amount ($) <span class="required">*</span></label>
+                            <input type="number" class="form-control" id="budget-amount" placeholder="e.g., 1500" min="0" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location Details</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Street Address <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="job-address" placeholder="123 Main Street" required>
+                        </div>
+                        <div class="form-group">
+                            <label>City <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="job-city" placeholder="e.g., New York" required>
+                        </div>
+                        <div class="form-group">
+                            <label>State <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="job-state" placeholder="e.g., NY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ZIP Code <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="job-zip" placeholder="e.g., 10001" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3><i class="fas fa-user-tie"></i> Contractor Requirements</h3>
+                    <p>Specify your requirements for the contractor:</p>
+                    
+                    <div class="form-group">
+                        <label>Required Skills</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="skill-license" value="licensed">
+                                <label for="skill-license">Licensed Professional</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="skill-insured" value="insured">
+                                <label for="skill-insured">Fully Insured</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="skill-bonded" value="bonded">
+                                <label for="skill-bonded">Bonded</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="skill-experience" value="5years">
+                                <label for="skill-experience">5+ Years Experience</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Minimum Experience Level</label>
+                            <select class="form-control" id="experience-level">
+                                <option value="">Any level</option>
+                                <option value="entry">Entry Level (0-2 years)</option>
+                                <option value="intermediate">Intermediate (2-5 years)</option>
+                                <option value="expert">Expert (5+ years)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Location Radius</label>
+                            <select class="form-control" id="location-radius">
+                                <option value="">No preference</option>
+                                <option value="5">Within 5 miles</option>
+                                <option value="10">Within 10 miles</option>
+                                <option value="25">Within 25 miles</option>
+                                <option value="50">Within 50 miles</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Additional Preferences</label>
+                        <textarea class="form-control" id="contractor-preferences" placeholder="Any specific preferences for the contractor..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="matching-section">
+                    <h3><i class="fas fa-users"></i> Contractor Matching</h3>
+                    <p>Based on your requirements, we've found these matching contractors:</p>
+                    
+                    <div class="matching-stats">
+                        <div class="stat-card">
+                            <h4>42</h4>
+                            <p>Available Contractors</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>15</h4>
+                            <p>Meet All Requirements</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>28</h4>
+                            <p>Within Your Location</p>
+                        </div>
+                    </div>
+                    
+                    <p>After posting your job, qualified contractors will be able to submit proposals. You'll receive notifications when new applications arrive.</p>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn btn-outline" id="save-draft">
+                    <i class="fas fa-save"></i> Save Draft
+                </button>
+                <button class="btn btn-primary" id="post-job">
+                    <i class="fas fa-paper-plane"></i> Post Job Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>BuildConnect</h3>
+                <p>Connecting clients with skilled contractors for all types of projects. Making home improvement and professional services accessible to everyone.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>For Clients</h3>
+                <ul class="footer-links">
+                    <li><a href="#">How to Hire</a></li>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">Client Resources</a></li>
+                    <li><a href="#">Payment Options</a></li>
+                    <li><a href="#">Safety Tips</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>For Contractors</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Create Profile</a></li>
+                    <li><a href="#">Find Jobs</a></li>
+                    <li><a href="#">Contractor Resources</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                    <li><a href="#">Premium Membership</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 BuildConnect. All rights reserved. | Terms of Service | Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove active class from all cards
+                document.querySelectorAll('.template-card').forEach(c => {
+                    c.classList.remove('active');
+                });
+                
+                // Add active class to clicked card
+                this.classList.add('active');
+                
+                // Get template type
+                const template = this.dataset.template;
+                
+                // Pre-fill form based on template
+                if (template === 'home-renovation') {
+                    document.getElementById('job-title').value = 'Home Renovation Project';
+                    document.getElementById('job-category').value = 'renovation';
+                    document.getElementById('job-description').value = 'Looking for a skilled contractor to renovate my home. The project includes kitchen remodeling, bathroom updates, and flooring replacement throughout the house.';
+                    document.getElementById('job-requirements').value = 'Must be licensed and insured. Experience with similar projects required. References preferred.';
+                    document.getElementById('budget-type').value = 'fixed';
+                    document.getElementById('budget-amount').value = '15000';
+                } else if (template === 'electrical') {
+                    document.getElementById('job-title').value = 'Electrical Panel Upgrade';
+                    document.getElementById('job-category').value = 'electrical';
+                    document.getElementById('job-description').value = 'Need to upgrade my home electrical panel from 100 amp to 200 amp service. Includes installing new circuit breakers and ensuring compliance with local codes.';
+                    document.getElementById('job-requirements').value = 'Licensed electrician required. Must provide proof of insurance. Knowledge of local electrical codes essential.';
+                    document.getElementById('budget-type').value = 'fixed';
+                    document.getElementById('budget-amount').value = '2500';
+                } else if (template === 'plumbing') {
+                    document.getElementById('job-title').value = 'Bathroom Plumbing Repair';
+                    document.getElementById('job-category').value = 'plumbing';
+                    document.getElementById('job-description').value = 'Need repair work for leaking pipes in master bathroom. Includes replacing damaged pipes, fixing water damage, and ensuring proper water pressure.';
+                    document.getElementById('job-requirements').value = 'Licensed plumber required. Experience with pipe replacement and bathroom plumbing. Must be insured.';
+                    document.getElementById('budget-type').value = 'hourly';
+                    document.getElementById('budget-amount').value = '85';
+                }
+            });
+        });
+        
+        // Form validation and submission
+        document.getElementById('post-job').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('job-title').value;
+            const category = document.getElementById('job-category').value;
+            const description = document.getElementById('job-description').value;
+            const requirements = document.getElementById('job-requirements').value;
+            const budgetType = document.getElementById('budget-type').value;
+            const budgetAmount = document.getElementById('budget-amount').value;
+            const address = document.getElementById('job-address').value;
+            const city = document.getElementById('job-city').value;
+            const state = document.getElementById('job-state').value;
+            const zip = document.getElementById('job-zip').value;
+            
+            // Simple validation
+            if (!title || !category || !description || !requirements || !budgetType || !budgetAmount || !address || !city || !state || !zip) {
+                alert('Please fill in all required fields marked with *');
+                return;
+            }
+            
+            if (isNaN(budgetAmount) {
+                alert('Budget amount must be a number');
+                return;
+            }
+            
+            // Show success message
+            alert('Job posted successfully! You will now be redirected to the job dashboard.');
+            
+            // Reset form
+            document.querySelectorAll('.template-card').forEach(c => {
+                c.classList.remove('active');
+            });
+            document.getElementById('job-form').reset();
+            
+            // In a real app, you would submit the form to the server here
+        });
+        
+        // Save draft functionality
+        document.getElementById('save-draft').addEventListener('click', function() {
+            alert('Draft saved successfully! You can return later to complete your job posting.');
+        });
+        
+        // Set minimum date for start date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('start-date').min = today;
+    </script>
+</body>
+</html>
